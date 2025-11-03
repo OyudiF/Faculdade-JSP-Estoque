@@ -4,17 +4,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// password: estoquehawk
+
 public class ConnectionFactory {
 	
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/sistema_estoque?useSSL=false&serverTimezone=UTC";
+	private static final String DB_URL = "jdbc:postgresql://db.sypqcogxwmplwfgwgiii.supabase.co:5432/postgres?sslmode=require";
 	
 //	private static final String DB_NAME = "sistema_estoque";
 	
-	private static final String DB_USER = "root";
+	private static final String DB_USER = "postgres";
 	
-	private static final String DB_PASS = "admin";
+	private static final String DB_PASS = "estoquehawk";
 	
-	private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+	private static final String DB_DRIVER = "org.postgresql.Driver";
 	
 	public static Connection getConnection() {
 		
@@ -25,12 +27,12 @@ public class ConnectionFactory {
 			return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 			
 		} catch (ClassNotFoundException e) {
-			System.err.println("ERRO: Driver JDBC do MySQL nao encontrado");
+			System.err.println("ERRO: Driver JDBC do PostgreSQL nao encontrado");
 			throw new RuntimeException("Driver nao encontrado", e);
 		} catch (SQLException e) {
-			System.err.println("ERRO: Falha ao conectar ao banco de dados");
+			System.err.println("ERRO: Falha ao conectar ao banco de dados Supabase");
 			e.printStackTrace();
-			throw new RuntimeException("Falha na conexao com o banco de dados");
+			throw new RuntimeException("Falha na conexao com o banco de dados", e);
 		}
 	}
 
