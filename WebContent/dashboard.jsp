@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; chraset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%-- Checagem de seguranca, caso esteja vazio o usuario nao fez o login --%>
@@ -47,10 +47,10 @@
 			<tr>Ações</tr>		
 		</thead>
 		<tbody>
-			<c:forEach var="produto" items="${listProdutos}">
+			<c:forEach var="produto" items="${listaProdutos}">
 				<tr>
 					<td>${produto.nome}</td>
-					<td>${produto.quantiade}</td>
+					<td>${produto.quantidade}</td>
 					<td class="actions">
 						<a href="produto?action=edit&id=${produto.id}">Editar</a>
 						<a href="produto?action=delete&id=${produto.id}"

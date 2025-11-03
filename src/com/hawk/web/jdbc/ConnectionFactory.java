@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/sistema_estoque";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/sistema_estoque?useSSL=false&serverTimezone=UTC";
 	
-	private static final String DB_NAME = "sistema_estoque";
+//	private static final String DB_NAME = "sistema_estoque";
 	
 	private static final String DB_USER = "root";
 	
@@ -22,7 +22,7 @@ public class ConnectionFactory {
 			
 			Class.forName(DB_DRIVER);
 			
-			return DriverManager.getConnection(DB_URL + "?useSSL=false", DB_USER, DB_PASS);
+			return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 			
 		} catch (ClassNotFoundException e) {
 			System.err.println("ERRO: Driver JDBC do MySQL nao encontrado");

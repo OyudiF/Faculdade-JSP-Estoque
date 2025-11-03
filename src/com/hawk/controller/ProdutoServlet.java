@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+//import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import com.hawk.model.Usuario;
 /**
  * Servlet implementation class ProdutoServlet
  */
-@WebServlet("/produto")
+//@WebServlet("/produto")
 public class ProdutoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -112,6 +112,8 @@ public class ProdutoServlet extends HttpServlet {
 	private void listarProdutos(HttpServletRequest request, HttpServletResponse response, int usuarioId) throws SQLException, IOException, ServletException {
 		
 		List<Produto> listaProdutos = produtoDAO.listarPorUsuario(usuarioId);
+		
+		System.out.println("--- ProdutoServlet (listarProdutos): O DAO retornou uma lista com " + listaProdutos.size() + " produtos.");
 		
 		request.setAttribute("listaProdutos", listaProdutos);
 		

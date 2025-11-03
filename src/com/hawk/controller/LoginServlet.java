@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+//import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ import com.hawk.model.Usuario;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/login")
+//@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
@@ -59,8 +59,13 @@ public class LoginServlet extends HttpServlet {
 				// Guarda o objeto do usuario na sessao
 				session.setAttribute("usuarioLogado", usuario);
 				
-				// Redireciona para o dashboard (Pagina principal logada)
-				response.sendRedirect("dashboard.jsp");
+				if("admin".equals(usuario.getRole())) {
+					// Redireciona para a dashboard de admin (Pagina Admin)
+					response.sendRedirect("admin");
+				} else {
+					// Redireciona para o dashboard (Pagina principal logada) Usuario comum
+					response.sendRedirect("produto");
+				}
 			} else {
 				// erro de login
 				request.setAttribute("errorMessage", "Email ou senha invalidos");

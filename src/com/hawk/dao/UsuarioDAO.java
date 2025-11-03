@@ -17,23 +17,61 @@ public class UsuarioDAO {
 	 * Recebe um objeto Usuario preenchido (Sem o ID)
 	 */
 	public void registrar(Usuario usuario) {
+		// LINHA DE TESTE 3:
+	    System.out.println("--- UsuarioDAO: método registrar() foi chamado! ---");
+	    System.out.println("--- Registrando usuário: " + usuario.getNome() + " ---");
+		
 		String sql = "INSERT INTO usuarios (nome, email, senha, role) VALUES (?, ?, ?, ?)";
 		
-		try (Connection conexao = ConnectionFactory.getConnection(); PreparedStatement ps = conexao.prepareStatement(sql)) {
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		
+		try {
 			
+			conexao = ConnectionFactory.getConnection();
+			conexao.setAutoCommit(false);
+			
+			ps = conexao.prepareStatement(sql);
 			ps.setString(1, usuario.getNome());
-			ps.setString(1, usuario.getEmail());
-			ps.setString(1, usuario.getSenha());
+			ps.setString(2, usuario.getEmail());
+			ps.setString(3, usuario.getSenha());
 			ps.setString(4, "user");
 			
-			ps.executeUpdate();
+			int linhasAfetadas = ps.executeUpdate();
+			
+			if (linhasAfetadas > 0) {
+				
+				conexao.commit();
+				System.out.println("-- UsuarioDAO: Commit realizado! Usuario salvo --");
+			} else {
+				
+				conexao.rollback();
+				System.out.println("-- UsuarioDAO: Rollback realizado. Nenhuma Linha afetada --");
+			}
 			
 			System.out.println("Usuario registrado com sucesso");
 			
 			
 		} catch (SQLException e) {
-			System.err.println("Erro ao registrar usuario: " + e.getMessage());
-			e.printStackTrace();
+			System.out.println("-- Erro UsuarioDAO.registrar --");
+			
+			try {
+				if (conexao != null) {
+					System.err.println("-- UsuarioDAO: Rollback por excecao --");
+					conexao.rollback();
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			
+			throw new RuntimeException("Erro ao registrar no banco", e);
+		} finally {
+			try {
+				if (ps != null) ps.close();
+				if (conexao != null) conexao.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -3,7 +3,7 @@ package com.hawk.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+//import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hawk.dao.UsuarioDAO;
 import com.hawk.model.Usuario;
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -23,10 +23,14 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println("--- RegisterServlet: método doPost() foi chamado! - 1 ---");
+		
 		// Recebimento de dados do formulario
 		String nome = request.getParameter("nome");
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
+		
+		System.out.println("--- Dados recebidos: " + nome + ", " + email + " - 2 ---");
 		
 		// Cria um objeto "Model"
 		Usuario novoUsuario = new Usuario();
