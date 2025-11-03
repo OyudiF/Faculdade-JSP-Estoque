@@ -8,8 +8,6 @@
   <artifactId>EstoqueFaculdade</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
-  
-  <name>ROOT</name>
 
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,10 +46,17 @@
   </dependencies>
 
   <build>
+    <sourceDirectory>src</sourceDirectory>
+    
     <plugins>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.3.2</version>
+        <configuration>
+            <warSourceDirectory>WebContent</warSourceDirectory>
+            
+            <warName>ROOT</warName>
+        </configuration>
       </plugin>
     </plugins>
   </build>
