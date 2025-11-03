@@ -1,0 +1,13 @@
+# Arquivos do Eclipse
+.project
+.classpath
+.settings/
+
+# Pastas de "Build" (Saída)
+/target/
+/build/
+
+# Arquivos do IDE
+.idea/
+*.iml
+*.nbproject/
