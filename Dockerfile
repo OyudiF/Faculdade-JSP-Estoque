@@ -25,7 +25,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copia o .war que criamos no Estágio 1 (build)
 # para dentro da pasta webapps do Tomcat
-COPY --from=build /app/target/ROOT.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expõe a porta 8080 (que o Tomcat usa)
 EXPOSE 8080
