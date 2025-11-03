@@ -8,13 +8,14 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	private static final String DB_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require";
+	// configs estarao no render
+	private static final String DB_URL = System.getenv("JDBC_DATABASE_URL");
 	
 //	private static final String DB_NAME = "sistema_estoque";
 	
-	private static final String DB_USER = "postgres.sypqcogxwmplwfgwgiii";
+	private static final String DB_USER = System.getenv("JDBC_DATABASE_USERNAME");
 	
-	private static final String DB_PASS = "estoquehawk";
+	private static final String DB_PASS = System.getenv("JDBC_DATABASE_PASSWORD");
 	
 	private static final String DB_DRIVER = "org.postgresql.Driver";
 	
