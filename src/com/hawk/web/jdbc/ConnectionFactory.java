@@ -8,11 +8,11 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	private static final String DB_URL = "jdbc:postgresql://db.sypqcogxwmplwfgwgiii.supabase.co:5432/postgres?sslmode=require";
+	private static final String DB_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require";
 	
 //	private static final String DB_NAME = "sistema_estoque";
 	
-	private static final String DB_USER = "postgres";
+	private static final String DB_USER = "postgres.sypqcogxwmplwfgwgiii";
 	
 	private static final String DB_PASS = "estoquehawk";
 	
