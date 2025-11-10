@@ -103,7 +103,7 @@ Para rodar esse projeto na sua máquina:
 5. **Rode o Projeto:** Inicie o servidor Tomcat a partir do seu IDE.
 
 ### RoadMap (Próximas Features)
-- [ ] **Segurança de Senha:** Implementar Hashing com `jBCrypt` no registro e login.
+- [x] **Segurança de Senha:** Implementar Hashing com `jBCrypt` no registro e login.
 - [ ] **Melhorar Produtos:** Adicionar mais propriedades (Preço, SKU, etc.).
 - [ ] **Cálculo de Valor:** Criar uma feature que calcula o valor total do estoque (preço * quantidade).
 - [ ] **Categorias:** Implementar um CRUD de categorias personalizadas, permitindo ao usuário filtrar seu estoque.
