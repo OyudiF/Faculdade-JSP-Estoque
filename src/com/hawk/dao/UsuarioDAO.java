@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.hawk.model.Usuario;
 import com.hawk.web.jdbc.ConnectionFactory;
@@ -31,10 +32,12 @@ public class UsuarioDAO {
 			conexao = ConnectionFactory.getConnection();
 			conexao.setAutoCommit(false);
 			
+			String senhaComHash = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
+			
 			ps = conexao.prepareStatement(sql);
 			ps.setString(1, usuario.getNome());
 			ps.setString(2, usuario.getEmail());
-			ps.setString(3, usuario.getSenha());
+			ps.setString(3, senhaComHash);
 			ps.setString(4, "user");
 			
 			int linhasAfetadas = ps.executeUpdate();
@@ -79,24 +82,27 @@ public class UsuarioDAO {
 	 * VALIDAR LOGIN: Faz um SELECT e retorna o usuario se a senha bater
 	 * Retorna o objeto Usuario se o login for valido, ou null se for invalido
 	 */
-	public Usuario validarLogin(String email, String senha) {
-		String sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
+	public Usuario validarLogin(String email, String senhaDigitada) {
+		String sql = "SELECT * FROM usuarios WHERE email = ?";
 		Usuario usuarioLogado = null;
 		
 		try (Connection conexao = ConnectionFactory.getConnection(); PreparedStatement ps = conexao.prepareStatement(sql)) {
 			
 			ps.setString(1, email);
-			ps.setString(2, senha);
 			
 			try (ResultSet rs = ps.executeQuery()) {
 				
 				if (rs.next()) {
 					
-					usuarioLogado = new Usuario();
-					usuarioLogado.setId(rs.getInt("id"));
-					usuarioLogado.setNome(rs.getString("nome"));
-					usuarioLogado.setEmail(rs.getString("email"));
-					usuarioLogado.setRole(rs.getString("role"));
+					String hashSalvoNoBanco = rs.getString("senha");
+					
+					if (BCrypt.checkpw(senhaDigitada, hashSalvoNoBanco)) {
+						usuarioLogado = new Usuario();
+						usuarioLogado.setId(rs.getInt("id"));
+						usuarioLogado.setNome(rs.getString("nome"));
+						usuarioLogado.setEmail(rs.getString("email"));
+						usuarioLogado.setRole(rs.getString("role"));
+					}
 				}
 			}
 			
