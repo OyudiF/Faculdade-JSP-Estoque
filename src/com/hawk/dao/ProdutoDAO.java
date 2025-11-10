@@ -75,7 +75,7 @@ public class ProdutoDAO {
 	 */
 	public void atualizar(Produto produto) {
 		// Clausula de Seguranca "AND usuario_id = ?"
-		String sql = "UPDATE produtos SET nome = ?, quantidade = ?, preco = ?, WHERE id = ? AND usuario_id = ?";
+		String sql = "UPDATE produtos SET nome = ?, quantidade = ?, preco = ? WHERE id = ? AND usuario_id = ?";
 		
 		try (Connection conexao = ConnectionFactory.getConnection(); PreparedStatement ps = conexao.prepareStatement(sql)) {
 			

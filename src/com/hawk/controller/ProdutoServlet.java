@@ -156,7 +156,13 @@ public class ProdutoServlet extends HttpServlet {
 		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
 		double preco = Double.parseDouble(request.getParameter("preco"));
 		
-		Produto novoProduto = new Produto(nome, quantidade, usuarioId, preco);
+		Produto novoProduto = new Produto();
+		
+		novoProduto.setNome(nome);
+	    novoProduto.setQuantidade(quantidade);
+	    novoProduto.setPreco(preco);
+	    novoProduto.setUsuarioId(usuarioId);
+		
 		produtoDAO.adicionar(novoProduto);
 		
 		// Redireciona para acao "list" (limpa o formulario)
@@ -171,7 +177,13 @@ public class ProdutoServlet extends HttpServlet {
 		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
 		double preco = Double.parseDouble(request.getParameter("preco"));
 		
-		Produto produto = new Produto(nome, quantidade, usuarioId, preco);
+		Produto produto = new Produto();
+		
+		produto.setId(id);
+	    produto.setNome(nome);
+	    produto.setQuantidade(quantidade);
+	    produto.setPreco(preco);
+	    produto.setUsuarioId(usuarioId);
 		produto.setId(id);
 		
 		produtoDAO.atualizar(produto);
