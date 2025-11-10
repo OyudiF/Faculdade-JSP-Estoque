@@ -104,8 +104,8 @@ Para rodar esse projeto na sua máquina:
 
 ### RoadMap (Próximas Features)
 - [x] **Segurança de Senha:** Implementar Hashing com `jBCrypt` no registro e login.
-- [ ] **Melhorar Produtos:** Adicionar mais propriedades (Preço, SKU, etc.).
-- [ ] **Cálculo de Valor:** Criar uma feature que calcula o valor total do estoque (preço * quantidade).
+- [x] **Melhorar Produtos:** Adicionar mais propriedades (Preço, SKU, etc.).
+- [x] **Cálculo de Valor:** Criar uma feature que calcula o valor total do estoque (preço * quantidade).
 - [ ] **Categorias:** Implementar um CRUD de categorias personalizadas, permitindo ao usuário filtrar seu estoque.
 - [ ] **Front-end:** Integrar `Bootstrap` para melhorar o design e a responsividade.
 - [ ] **Validação:** Adicionar validação no _back-end_ (Servlets) para garantir que dados nulos ou maliciosos não cheguem ao banco.
