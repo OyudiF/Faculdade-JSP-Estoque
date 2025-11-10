@@ -113,9 +113,13 @@ public class ProdutoServlet extends HttpServlet {
 		
 		List<Produto> listaProdutos = produtoDAO.listarPorUsuario(usuarioId);
 		
+		double valorTotal = produtoDAO.getValorTotalEstoque(usuarioId);
+		
 		System.out.println("--- ProdutoServlet (listarProdutos): O DAO retornou uma lista com " + listaProdutos.size() + " produtos.");
 		
 		request.setAttribute("listaProdutos", listaProdutos);
+		
+		request.setAttribute("valorTotalEstoque", valorTotal);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("dashboard.jsp");
 		dispatcher.forward(request, response);
@@ -150,8 +154,9 @@ public class ProdutoServlet extends HttpServlet {
 		
 		String nome = request.getParameter("nome");
 		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+		double preco = Double.parseDouble(request.getParameter("preco"));
 		
-		Produto novoProduto = new Produto(nome, quantidade, usuarioId);
+		Produto novoProduto = new Produto(nome, quantidade, usuarioId, preco);
 		produtoDAO.adicionar(novoProduto);
 		
 		// Redireciona para acao "list" (limpa o formulario)
@@ -164,8 +169,9 @@ public class ProdutoServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String nome = request.getParameter("nome");
 		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+		double preco = Double.parseDouble(request.getParameter("preco"));
 		
-		Produto produto = new Produto(nome, quantidade, usuarioId);
+		Produto produto = new Produto(nome, quantidade, usuarioId, preco);
 		produto.setId(id);
 		
 		produtoDAO.atualizar(produto);

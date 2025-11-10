@@ -54,6 +54,11 @@
 			<label for="quantidade">Quantidade: </label>
 			<input type="number" id="quantidade" name="quantidade" value="${produto.quantidade}" required/>
 		</div>
+		
+		<div>
+			<label for="preco">Preço (R$):</label>
+			<input type="number" step="0.01" min="0" id="preco" name="preco" value="${produto.preco}" required>
+		</div>
 	
 		<%-- Botao dinamico --%>
 		<button type="submit">

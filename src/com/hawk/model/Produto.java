@@ -8,14 +8,17 @@ public class Produto {
 	
 	private int usuarioId;
 	
+	private double preco;
+	
 	public Produto() {
 	
 	}
 
-	public Produto(String nome, int quantidade, int usuarioId) {
+	public Produto(String nome, int quantidade, int usuarioId, double preco) {
 		this.nome = nome;
 		this.quantidade = quantidade;
 		this.usuarioId = usuarioId;
+		this.preco = preco;
 	}
 
 	public int getId() {
@@ -54,8 +57,12 @@ public class Produto {
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", quantidade=" + quantidade + ", usuarioId=" + usuarioId + "]";
 	}
-	
-	
-	
-	
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
 }
