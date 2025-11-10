@@ -17,13 +17,14 @@ public class ProdutoDAO {
 	 * O objeto 'produto' ja deve vir com o 'usuarioId' preenchido
 	 */
 	public void adicionar(Produto produto) {
-		String sql = "INSERT INTO produtos (nome, quantidade, usuario_id) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO produtos (nome, quantidade, usuario_id, preco) VALUES (?, ?, ?, ?)";
 		
 		try (Connection conexao = ConnectionFactory.getConnection(); PreparedStatement ps = conexao.prepareStatement(sql)) {
 			
 			ps.setString(1, produto.getNome());
 			ps.setInt(2, produto.getQuantidade());
 			ps.setInt(3, produto.getUsuarioId());
+			ps.setDouble(4, produto.getPreco());
 			
 			ps.executeUpdate();
 			System.out.println("Produto '" + produto.getNome() + "' adicionado com sucesso.");
@@ -53,6 +54,7 @@ public class ProdutoDAO {
 					produto.setNome(rs.getString("nome"));
 					produto.setQuantidade(rs.getInt("quantidade"));
 					produto.setUsuarioId(rs.getInt("usuario_id"));
+					produto.setPreco(rs.getDouble("preco"));
 					
 					// Adiciona o produto na lista de retorno
 					produtos.add(produto);
@@ -73,14 +75,15 @@ public class ProdutoDAO {
 	 */
 	public void atualizar(Produto produto) {
 		// Clausula de Seguranca "AND usuario_id = ?"
-		String sql = "UPDATE produtos SET nome = ?, quantidade = ? WHERE id = ? AND usuario_id = ?";
+		String sql = "UPDATE produtos SET nome = ?, quantidade = ?, preco = ?, WHERE id = ? AND usuario_id = ?";
 		
 		try (Connection conexao = ConnectionFactory.getConnection(); PreparedStatement ps = conexao.prepareStatement(sql)) {
 			
 			ps.setString(1, produto.getNome());
 			ps.setInt(2, produto.getQuantidade());
-			ps.setInt(3, produto.getId());
-			ps.setInt(4, produto.getUsuarioId());
+			ps.setDouble(3, produto.getPreco());
+			ps.setInt(4, produto.getId());
+			ps.setInt(5, produto.getUsuarioId());
 			
 			int linhasAfetadas = ps.executeUpdate();
 			
@@ -142,6 +145,7 @@ public class ProdutoDAO {
 					produto.setNome(rs.getString("nome"));
 					produto.setQuantidade(rs.getInt("quantidade"));
 					produto.setUsuarioId(rs.getInt("usuario_id"));
+					produto.setPreco(rs.getDouble("preco"));
 				}
 			} 
 		} catch (SQLException e) {
@@ -150,6 +154,34 @@ public class ProdutoDAO {
 		}
 		
 		return produto;
+	}
+	
+	/**
+	 * Retorna o valor total do estoque (Preco * quantidade)
+	 * @param usuarioId
+	 * @return O valor total (double) do estoque
+	 */
+	public double getValorTotalEstoque(int usuarioId) {
+		String sql = "SELECT SUM(quantidade * preco) AS  valor_total FROM produtos WHERE usuario_id = ?";
+		
+		double valorTotal = 0.0;
+		
+		try (Connection conexao = ConnectionFactory.getConnection(); PreparedStatement ps = conexao.prepareStatement(sql)) {
+			
+			ps.setInt(1, usuarioId);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				
+				if (rs.next()) {
+					
+					valorTotal = rs.getDouble("valor_total");
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao calcular valor total do estoque: " + e.getMessage());
+		}
+		
+		return valorTotal;
 	}
 	
 	

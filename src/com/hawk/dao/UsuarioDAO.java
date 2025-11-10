@@ -24,58 +24,46 @@ public class UsuarioDAO {
 		
 		String sql = "INSERT INTO usuarios (nome, email, senha, role) VALUES (?, ?, ?, ?)";
 		
-		Connection conexao = null;
-		PreparedStatement ps = null;
+		try (Connection conexao = ConnectionFactory.getConnection()) {
 		
-		try {
-			
-			conexao = ConnectionFactory.getConnection();
 			conexao.setAutoCommit(false);
 			
-			String senhaComHash = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
+			try (PreparedStatement ps = conexao.prepareStatement(sql)) {
 			
-			ps = conexao.prepareStatement(sql);
-			ps.setString(1, usuario.getNome());
-			ps.setString(2, usuario.getEmail());
-			ps.setString(3, senhaComHash);
-			ps.setString(4, "user");
-			
-			int linhasAfetadas = ps.executeUpdate();
-			
-			if (linhasAfetadas > 0) {
+				String senhaComHash = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
 				
-				conexao.commit();
-				System.out.println("-- UsuarioDAO: Commit realizado! Usuario salvo --");
-			} else {
+				ps.setString(1, usuario.getNome());
+				ps.setString(2, usuario.getEmail());
+				ps.setString(3, senhaComHash);
+				ps.setString(4, "user");
 				
-				conexao.rollback();
-				System.out.println("-- UsuarioDAO: Rollback realizado. Nenhuma Linha afetada --");
-			}
-			
-			System.out.println("Usuario registrado com sucesso");
-			
-			
-		} catch (SQLException e) {
-			System.out.println("-- Erro UsuarioDAO.registrar --");
-			
-			try {
-				if (conexao != null) {
-					System.err.println("-- UsuarioDAO: Rollback por excecao --");
+				int linhasAfetadas = ps.executeUpdate();
+				
+				if (linhasAfetadas > 0) {
+					
+					conexao.commit();
+					System.out.println("-- UsuarioDAO: Commit realizado! Usuario salvo --");
+				} else {
+					
 					conexao.rollback();
+					System.out.println("-- UsuarioDAO: Rollback realizado. Nenhuma Linha afetada --");
 				}
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-			
-			throw new RuntimeException("Erro ao registrar no banco", e);
-		} finally {
-			try {
-				if (ps != null) ps.close();
-				if (conexao != null) conexao.close();
+				
+				System.out.println("Usuario registrado com sucesso");
+				
 			} catch (SQLException e) {
-				e.printStackTrace();
+				System.err.println("-- Erro UsuarioDAO.registrar (interno) --");
+				System.err.println("-- UsuarioDAO: RollBack por excecao --");
+				conexao.rollback();
+				throw e;
 			}
+		
+		} catch (SQLException e) {
+			System.err.println("-- Erro UsuarioDAO.registrar (externo) --");
+	        e.printStackTrace();
+	        throw new RuntimeException("Erro ao registrar no banco", e);
 		}
+
 	}
 	
 	/**

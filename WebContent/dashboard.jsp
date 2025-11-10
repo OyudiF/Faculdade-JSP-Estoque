@@ -38,12 +38,15 @@
 	
 	<a href="produto?action=new">Adicionar Novo Produto</a>
 	
-	<h3>Seus Produtos</h3>
+	<h3>Seus Produtos -
+		<span>Valor Total do Estoque: <strong style="color: green;">${valorTotalEstoque}</strong></span>
+	</h3>
 	
 	<table>
 		<thead>
 			<tr>Produto</tr>
 			<tr>Quantidade</tr>
+			<tr>Preço (R$)</tr>
 			<tr>Ações</tr>		
 		</thead>
 		<tbody>
@@ -51,6 +54,7 @@
 				<tr>
 					<td>${produto.nome}</td>
 					<td>${produto.quantidade}</td>
+					<td>R$ ${produto.preco}</td>
 					<td class="actions">
 						<a href="produto?action=edit&id=${produto.id}">Editar</a>
 						<a href="produto?action=delete&id=${produto.id}"
@@ -64,7 +68,7 @@
 			<c:if test="${empty listaProdutos}"> 
 				
 				<tr>
-					<td colspan="3">Você ainda não cadastrou nenhum produto</td>
+					<td colspan="4">Você ainda não cadastrou nenhum produto</td>
 				</tr>
 				
 			</c:if>
