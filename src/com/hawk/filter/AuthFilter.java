@@ -49,8 +49,8 @@ public class AuthFilter implements Filter {
 									path.equals("/register.jsp") ||
 									path.equals("/login") ||
 									path.equals("/register") ||
-									path.startsWith("/css/") ||
-									path.startsWith("/js/");
+									path.startsWith("/erro.jsp") ||
+									path.startsWith("/assets/");
 		
 		if (isPaginaPublica) {
 			chain.doFilter(request, response);
