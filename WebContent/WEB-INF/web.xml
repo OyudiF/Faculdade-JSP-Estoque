@@ -24,6 +24,15 @@
   	<location>/erro.jsp</location>
   </error-page>
   
+  <servlet-mapping>
+    <servlet-name>jsp</servlet-name>
+    <url-pattern>*.jsp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>jsp</servlet-name>
+	    <url-pattern>*.jspf</url-pattern>
+	</servlet-mapping>
+  
   <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.hawk.controller.RegisterServlet</servlet-class>
