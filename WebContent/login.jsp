@@ -52,6 +52,12 @@
       <button class="btn btn-primary w-100 py-2" type="submit">Entrar</button>
 
     </form>
+    
+    <div class="text-center mt-3">
+        <p class="text-body-secondary">
+            Novo por aqui? <a href="register.jsp">Crie sua conta</a>
+        </p>
+    </div>
 </main>
 
 <%@ include file="footer.jspf" %>
